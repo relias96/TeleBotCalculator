@@ -23,7 +23,7 @@ Required Steps
 3. Write functions for the Bot so that he can react to different requests.
 4. Take in an expression by parsing the input-string to an SymPy-function 2. Calculate the output for the requested operation
 
-Libraries to Use
+## Libraries to Use
 
 - pyTelegramBotAPI (https://github.com/eternnoir/pyTelegramBotAPI) 
 - SymPy (https://docs.sympy.org/latest/index.html)
