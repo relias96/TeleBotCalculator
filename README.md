@@ -21,7 +21,8 @@ Required Steps
 1. Create a Telegram-Bot
 2. Generate a API-token for the new Bot
 3. Write functions for the Bot so that he can react to different requests.
-4. Take in an expression by parsing the input-string to an SymPy-function 2. Calculate the output for the requested operation
+4. Take in an expression by parsing the input-string to an SymPy-function 
+5. Calculate the output for the requested operation
 
 ## Libraries to Use
 
