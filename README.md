@@ -14,7 +14,8 @@ This Project is about to code an Telegram-Bot. It should take in mathematical ex
 - „derivate“
 - „integrate“
 - „plot“
-- „maximum“ • „minimum“
+- „maximum“ 
+- „minimum“
 
 The Bot should reply via text message if some Calculation is done or send a picture if a plot was requested.
 Required Steps
