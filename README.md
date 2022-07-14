@@ -3,6 +3,7 @@
 For more information about the Telegram-Bot-API follow the link:
   https://pytba.readthedocs.io/en/latest/index.html
 
+The Bot has the Name: https://t.me/MathCalcultorBot
 
 
 ## Goal of the Project
