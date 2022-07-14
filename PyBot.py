@@ -1,5 +1,6 @@
 import telebot
 
-API_TOKEN = 5560407683:AAGrtsLfIznmG8PWtgoU_OtlkNRlWG2T8w4
+with open('API_token.txt') as f:
+   API_TOKEN = f.readlines()
 
 bot = telebot.TeleBot(API_TOKEN)
