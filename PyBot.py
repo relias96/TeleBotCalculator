@@ -1,10 +1,10 @@
 import telebot
 
-with open('API_token.txt') as f:
-   API_TOKEN = f.readlines()
+with open('API_Token.txt') as f:
+   API_TOKEN = str(f.read())
 
+#bot = telebot.TeleBot(token="5560407683:AAGrtsLfIznmG8PWtgoU_OtlkNRlWG2T8w4")
 bot = telebot.TeleBot(API_TOKEN)
-
 
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
