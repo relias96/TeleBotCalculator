@@ -82,8 +82,10 @@ def echo_message(message):
 @bot.message_handler(regexp="minimum .*")
 def echo_message(message):
     term = message.text.replace('minimum ', '')
-    term = minimum(term, x)
-    bot.reply_to(message, term)
+    #term, intervals = term.split('from')
+    func = parse_expr(term, local_dict={'x': x}, transformations=T[:])
+    m = minimum(func, x)
+    bot.reply_to(message, m)
 
 # Handle all other messages
 @bot.message_handler(func=lambda message: True)
