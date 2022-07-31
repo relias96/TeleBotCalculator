@@ -3,6 +3,8 @@ import telebot
 from sympy import *
 import matplotlib.pyplot as plt
 import numpy as np
+import io
+from PIL import Image
 
 x, y, z = symbols('x y z')
 init_printing(use_unicode=True)
@@ -37,21 +39,21 @@ def echo_message(message):
 @bot.message_handler(regexp="derivate .*")
 def echo_message(message):
     term = message.text.replace('derivate ', '')
-    bot.reply_to(message, term) 
+    bot.reply_to(message, diff(term)) 
 
-@bot.message_handler(regexp="integrade .*")
+@bot.message_handler(regexp="integrate .*")
 def echo_message(message):
-    term = message.text.replace('integrade ', '')
-    bot.reply_to(message, term) 
+    term = message.text.replace('integrate ', '')
+    bot.reply_to(message, integrate(term, x)) 
 
 #function to plot a graph
-@bot.message_handler(regexp="plot .* from\[\d+,\d+\]")
+@bot.message_handler(regexp="(plot) (...)")
 def echo_message(message):
     term = message.text.replace('plot ', '')
     term, intervals = term.split('from')
-    func = sympy.parse_expr(term)
+    func = lambda x : sympy.parse_expr(term, local_dict={'x':x})
     i, j = intervals.replace("[","").replace("]","").split(",")
-    plt.style.use('ggplot')
+    #plt.style.use('ggplot')
     x = np.linspace(float(i), float(j), 1000)
     y = func(x)
     fig, ax = plt.subplots()
@@ -59,8 +61,11 @@ def echo_message(message):
     ax.set(xlabel='x', ylabel='y',
            xlim=(float(i), float(j)), xticks=np.arange(float(i), float(j)),
            ylim=(min(y), max(y)),yticks=np.arange(min(y), max(y)))
-    plt.show()
-    bot.send_photo(message.chat.id, plt.gcf())
+    #plt.show()
+    img_buf = io.BytesIO()
+    plt.savefig(img_buf, format='png')
+    im = Image.open(img_buf)
+    bot.send_photo(message.chat.id, im)
 
 #function to find the maximum of a function
 @bot.message_handler(regexp="maximum .*")
