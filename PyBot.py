@@ -36,7 +36,7 @@ I can reply to the following commands:\n
 @bot.message_handler(regexp="simplify .*")
 def echo_message(message):
     term = message.text.replace('simplify ', '')
-    bot.send_message(message.chat.id, simplify(term))
+    bot.reply_to(message, simplify(term))
 
 
 @bot.message_handler(regexp="derivate .*")
@@ -75,8 +75,10 @@ def echo_message(message):
 @bot.message_handler(regexp="maximum .*")
 def echo_message(message):
     term = message.text.replace('maximum ', '')
-    term = maximum(term, x)
-    bot.reply_to(message, term) 
+    func = sympy.parse_expr(term, local_dict={'x':x}, transformations=T[:])
+    m = maximum(func, x)
+    bot.reply_to(message, m)
+
 
 #function to find the minimum of a function
 @bot.message_handler(regexp="minimum .*")
@@ -91,6 +93,7 @@ def echo_message(message):
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):
     bot.reply_to(message, 'command not found')
+
 
 
 bot.infinity_polling()
