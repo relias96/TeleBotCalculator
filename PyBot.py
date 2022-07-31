@@ -10,6 +10,7 @@ with open('API_Token.txt') as f:
 
 bot = telebot.TeleBot(API_TOKEN)
 
+
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
@@ -28,7 +29,7 @@ I can reply to the following commands:\n
 @bot.message_handler(regexp="simplify .*")
 def echo_message(message):
     term = message.text.replace('simplify ', '')
-    bot.reply_to(message, simplify(term)) 
+    bot.send_message(message.chat.id, u'simplify(term)') 
 
 @bot.message_handler(regexp="derivate .*")
 def echo_message(message):
