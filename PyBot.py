@@ -1,10 +1,12 @@
-import sympy
+
 import telebot
 from sympy import *
 import matplotlib.pyplot as plt
 import numpy as np
 import io
 from PIL import Image
+from sympy.parsing.sympy_parser import transformations
+from sympy.parsing.sympy_parser import T
 
 x, y, z = symbols('x y z')
 init_printing(use_unicode=True)
@@ -36,22 +38,25 @@ def echo_message(message):
     term = message.text.replace('simplify ', '')
     bot.send_message(message.chat.id, simplify(term))
 
+
 @bot.message_handler(regexp="derivate .*")
 def echo_message(message):
     term = message.text.replace('derivate ', '')
     bot.reply_to(message, diff(term)) 
+
 
 @bot.message_handler(regexp="integrate .*")
 def echo_message(message):
     term = message.text.replace('integrate ', '')
     bot.reply_to(message, integrate(term, x)) 
 
+
 #function to plot a graph
-@bot.message_handler(regexp="(plot) (...)")
+@bot.message_handler(regexp="(plot )(...)")
 def echo_message(message):
     term = message.text.replace('plot ', '')
     term, intervals = term.split('from')
-    func = lambda x : sympy.parse_expr(term, local_dict={'x':x})
+    func = lambda x : parse_expr(term, local_dict={'x':x},transformations=T[:])
     i, j = intervals.replace("[","").replace("]","").split(",")
     #plt.style.use('ggplot')
     x = np.linspace(float(i), float(j), 1000)
@@ -61,7 +66,6 @@ def echo_message(message):
     ax.set(xlabel='x', ylabel='y',
            xlim=(float(i), float(j)), xticks=np.arange(float(i), float(j)),
            ylim=(min(y), max(y)),yticks=np.arange(min(y), max(y)))
-    #plt.show()
     img_buf = io.BytesIO()
     plt.savefig(img_buf, format='png')
     im = Image.open(img_buf)
