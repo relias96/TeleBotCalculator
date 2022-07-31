@@ -73,8 +73,12 @@ def echo_message(message):
 def echo_message(message):
     term = message.text.replace('minimum ', '')
     term = minimum(term, x)
-    bot.reply_to(message, term) 
+    bot.reply_to(message, term)
 
+# Handle all other messages
+@bot.message_handler(func=lambda message: True)
+def echo_message(message):
+    bot.reply_to(message, 'command not found')
 
 
 bot.infinity_polling()
