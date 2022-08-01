@@ -18,18 +18,37 @@ def extract_arg(arg):
     return arg.split()[1:]
 
 # Handle '/start' and '/help'
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, """\
 Hi there, I am TeleBotCalculator.\n
 I can reply to the following commands:\n
-- simplify\n
-- derivate\n
-- integrate\n
-- plot\n
-- maximum\n
-- minimum
+- simplify <expression>\n
+- derivate <expression>\n
+- integrate < expression>\n
+- plot <expression> from <IntervallStart> to <IntervallEnd>\n
+- maximum <expression>\n
+- minimum <expression>
+
+Write the command "help" to get more information about the functions
 """)
+
+@bot.message_handler(commands=['help'])
+def send_help(message):
+    bot.reply_to(message, """\
+    
+    Rule I: Don't use whitespaces in the expression. \n
+    Rule II: Only use 'x' as variable. \n
+    Rule III: Only use one variable.\n
+    
+    supported Operators:
+    decimal seperator   --> '.'\n
+    sinus               --> 'sin()'\n
+    quareroot           --> 'sqrt()'\n
+    power               --> '**' or '^'\n
+    exponetial          --> 'exp()'\n
+    """)
+    
 
 @bot.message_handler(commands=["simplify"])
 def simplify_message(message):
@@ -55,13 +74,18 @@ def integrate_message(message):
 def plot_message(message):
     args = extract_arg(message.text)[:]
     term = args[0]
-    func = parse_expr(term, transformations='all')
-    i, j = args[-3], args[-1]
-    p1 = plot(func, show=False, xlim=(i, j), ylim=(minimum(func, x, domain=Interval(float(i),float(j))),
-                                                   maximum(func, x, domain=Interval(float(i), float(j)))))
+    func = parse_expr(term, local_dict={'x':x}, transformations='all')
     img_buf = io.BytesIO()
-    p1.save(img_buf)
-    im = Image.open(img_buf)
+    if len(args) == 5:
+        i, j = args[-3], args[-1]
+        p1 = plotting.plot(func, show=False, xlim=(i, j), ylim=(minimum(func, x, domain=Interval(float(i),float(j))),
+                                                   maximum(func, x, domain=Interval(float(i), float(j)))))
+        p1.save(img_buf)
+        im = Image.open(img_buf)
+    else:
+        p1 = plotting.plot(func, show=False)
+        p1.save(img_buf)
+        im = Image.open(img_buf)
     bot.send_photo(message.chat.id, im)
 
 #function to find the maximum of a function
