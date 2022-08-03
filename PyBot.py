@@ -94,7 +94,6 @@ def echo_message(message):
     args = extract_arg(message.text)[:]
     term = args[0]
     func = parse_expr(term, local_dict={'x': x}, transformations='all')
-    m = 0
     if len(args) == 5:
         i, j = args[-3], args[-1]
         m = maximum(func, x, Interval(float(i), float(j)))
