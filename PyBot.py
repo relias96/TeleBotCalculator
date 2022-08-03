@@ -3,7 +3,6 @@ import telebot
 from sympy import *
 import io
 from PIL import Image
-from sympy.parsing.sympy_parser import T
 
 
 x, y, z = symbols('x y z')
@@ -17,22 +16,23 @@ bot = telebot.TeleBot(API_TOKEN)
 def extract_arg(arg):
     return arg.split()[1:]
 
-# Handle '/start' and '/help'
+# Handle '/start'
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, """\
 Hi there, I am TeleBotCalculator.\n
 I can reply to the following commands:\n
-- simplify <expression>\n
-- derivate <expression>\n
-- integrate < expression>\n
-- plot <expression> from <IntervallStart> to <IntervallEnd>\n
-- maximum <expression> (from <IntervallStart> to <IntervallEnd>)\n
-- minimum <expression> (from <IntervallStart> to <IntervallEnd>)
+- /simplify <expression>\n
+- /derivate <expression>\n
+- /integrate < expression>\n
+- /plot <expression> from <IntervallStart> to <IntervallEnd>\n
+- /maximum <expression> (from <IntervallStart> to <IntervallEnd>)\n
+- /minimum <expression> (from <IntervallStart> to <IntervallEnd>)
 
-Write the command "help" to get more information about the functions
+Write the command "/help" to get more information about the functions
 """)
 
+# Handle '/help'
 @bot.message_handler(commands=['help'])
 def send_help(message):
     bot.reply_to(message, """\
@@ -50,26 +50,28 @@ def send_help(message):
     """)
     
 
+# Handle '/simplify'
 @bot.message_handler(commands=["simplify"])
 def simplify_message(message):
     term = extract_arg(message.text)[0]
     bot.reply_to(message, simplify(term))
 
 
-
+# Handle '/derivate'
 @bot.message_handler(commands=["derivate"])
 def derivate_message(message):
     term = extract_arg(message.text)[0]
     bot.reply_to(message, diff(term)) 
 
 
+# Handle '/integrate'
 @bot.message_handler(commands=["integrate"])
 def integrate_message(message):
     term = extract_arg(message.text)[0]
     bot.reply_to(message, integrate(term, x)) 
 
 
-#function to plot a graph
+#Handle '/plot'
 @bot.message_handler(commands=["plot"])
 def plot_message(message):
     args = extract_arg(message.text)[:]
@@ -88,7 +90,8 @@ def plot_message(message):
         im = Image.open(img_buf)
     bot.send_photo(message.chat.id, im)
 
-#function to find the maximum of a function
+
+# Handle '/maximum'
 @bot.message_handler(commands=["maximum"])
 def echo_message(message):
     args = extract_arg(message.text)[:]
@@ -102,12 +105,17 @@ def echo_message(message):
     bot.reply_to(message, m)
 
 
-#function to find the minimum of a function
+# Handle '/minimum'
 @bot.message_handler(commands=["minimum"])
 def echo_message(message):
-    term = extract_arg(message.text)[0]
-    func = parse_expr(term, local_dict={'x': x}, transformations=T[:])
-    m = minimum(func, x)
+    args = extract_arg(message.text)[:]
+    term = args[0]
+    func = parse_expr(term, local_dict={'x': x}, transformations='all')
+    if len(args) == 5:
+        i, j = args[-3], args[-1]
+        m = minimum(func, x, Interval(float(i), float(j)))
+    else:
+        m = minimum(func, x)
     bot.reply_to(message, m)
 
 
