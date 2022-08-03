@@ -27,8 +27,8 @@ I can reply to the following commands:\n
 - derivate <expression>\n
 - integrate < expression>\n
 - plot <expression> from <IntervallStart> to <IntervallEnd>\n
-- maximum <expression>\n
-- minimum <expression>
+- maximum <expression> (from <IntervallStart> to <IntervallEnd>)\n
+- minimum <expression> (from <IntervallStart> to <IntervallEnd>)
 
 Write the command "help" to get more information about the functions
 """)
@@ -91,9 +91,15 @@ def plot_message(message):
 #function to find the maximum of a function
 @bot.message_handler(commands=["maximum"])
 def echo_message(message):
-    term = extract_arg(message.text)[0]
-    func = parse_expr(term, local_dict={'x':x}, transformations=T[:])
-    m = maximum(func, x)
+    args = extract_arg(message.text)[:]
+    term = args[0]
+    func = parse_expr(term, local_dict={'x': x}, transformations='all')
+    m = 0
+    if len(args) == 5:
+        i, j = args[-3], args[-1]
+        m = maximum(func, x, Interval(float(i), float(j)))
+    else:
+        m = maximum(func, x)
     bot.reply_to(message, m)
 
 
