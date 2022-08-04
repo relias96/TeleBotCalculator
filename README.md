@@ -12,22 +12,19 @@ This Project is about to code an Telegram-Bot. It should take as input mathemati
 
 ### Supported commands will be: 
 
-- „simplify“
-- „derivate“
-- „integrate“
-- „plot“
-- „maximum“ 
-- „minimum“
+- /simplify <expression> 
+- /derivate <expression> 
+- /integrate < expression> 
+- /plot <expression> from <IntervallStart> to <IntervallEnd> 
+- /maximum <expression> (from <IntervallStart> to <IntervallEnd>) 
+- /minimum <expression> (from <IntervallStart> to <IntervallEnd>)
 
-The Bot replies via text message if some Calculation is done or send a picture if a plot was requested.
-Required Steps
-1. Create a Telegram-Bot
-2. Generate a API-token for the new Bot
-3. Write functions for the Bot so that he can react to different requests.
-4. Take in an expression by parsing the input-string to an SymPy-function 
-5. Calculate the output for the requested operation
+The Bot replies via text message if some calculation is done or send a photo if a plot was requested.
+
 
 ## Instructions for Usage
+When you fulfil the requirements then you are ready to use the Telebot. You shold make sure that the PyBot.py is running before you send a message to the TeleBot. You can send "/start" to the Telebot (https://t.me/MathCalcultorBot) to start. He will give you a short overwiew about what he can do. Then you can send a message with one of the supported commands. Important: you need to put a slash '/' infront of it. Eg.: /simplify 2*x+2*2+2*x−5*x  
+If you need help then you can text him "/help" and he will send you a message with information about some important rules and allowed operators.
 
 
 ## Requirements to Use the TeleBot
