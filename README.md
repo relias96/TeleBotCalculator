@@ -10,7 +10,8 @@ The Bot has the Name: https://t.me/MathCalcultorBot
 
 This Project is about to code an Telegram-Bot. It should take as input mathematical expressions (eg. „sin(x*2pi)“ ) and then perform some kind of action on it, depending on the given command.
 
-# Supported commands will be: 
+### Supported commands will be: 
+
 - „simplify“
 - „derivate“
 - „integrate“
@@ -26,9 +27,13 @@ Required Steps
 4. Take in an expression by parsing the input-string to an SymPy-function 
 5. Calculate the output for the requested operation
 
-## Libraries to Use
+## Instructions for Usage
+
+
+## Requirements to Use the TeleBot
 
 - pyTelegramBotAPI (https://github.com/eternnoir/pyTelegramBotAPI) 
 - SymPy (https://docs.sympy.org/latest/index.html)
 - Matplotlib (https://matplotlib.org)
 - SciPy (https://scipy.org)
+
