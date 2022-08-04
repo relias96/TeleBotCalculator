@@ -8,9 +8,9 @@ The Bot has the Name: https://t.me/MathCalcultorBot
 
 ## Goal of the Project
 
-This Project is about to code an Telegram-Bot. It should take in mathematical expressions (eg „sin(x*2pi)“ ) and then perform some kind of action on it.
+This Project is about to code an Telegram-Bot. It should take as input mathematical expressions (eg. „sin(x*2pi)“ ) and then perform some kind of action on it, depending on the given command.
 
-## Supported actions will be: 
+# Supported commands will be: 
 - „simplify“
 - „derivate“
 - „integrate“
@@ -18,7 +18,7 @@ This Project is about to code an Telegram-Bot. It should take in mathematical ex
 - „maximum“ 
 - „minimum“
 
-The Bot should reply via text message if some Calculation is done or send a picture if a plot was requested.
+The Bot replies via text message if some Calculation is done or send a picture if a plot was requested.
 Required Steps
 1. Create a Telegram-Bot
 2. Generate a API-token for the new Bot
