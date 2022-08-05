@@ -1,21 +1,18 @@
-
 import telebot
 from sympy import *
 import io
 from PIL import Image
 
-
 x, y, z = symbols('x y z')
 
 with open('API_Token.txt') as f:
-   API_TOKEN = str(f.read())
-
+    API_TOKEN = str(f.read())
 
 bot = telebot.TeleBot(API_TOKEN)
 
+
 def extract_arg(arg):
     return arg.split()[1:]
-
 
 
 def getAnswerXY(term, y):
@@ -31,6 +28,7 @@ def getAnswerXY(term, y):
         toSolve = "%s-%s" % (term, y)
     mx = solve(parse_expr(toSolve, local_dict={'x': x}, transformations='all'))[0]
     return "x = %s \ny = %s " % (mx, y)
+
 
 # Handle '/start'
 @bot.message_handler(commands=['start'])
@@ -49,6 +47,7 @@ def send_welcome(message):
         - /maximum <expression> (from <IntervallStart> to <IntervallEnd>)\n
         - /minimum <expression> (from <IntervallStart> to <IntervallEnd>)\n
         Write the command "/help" to get more information about the functions """)
+
 
 # Handle '/help'
 @bot.message_handler(commands=['help'])
@@ -109,7 +108,7 @@ def integrate_message(message):
     bot.reply_to(message, integrate(term, x))
 
 
-#Handle '/plot'
+# Handle '/plot'
 @bot.message_handler(commands=["plot"])
 def plot_message(message):
     '''
@@ -118,12 +117,12 @@ def plot_message(message):
     '''
     args = extract_arg(message.text)[:]
     term = args[0]
-    func = parse_expr(term, local_dict={'x':x}, transformations='all')
+    func = parse_expr(term, local_dict={'x': x}, transformations='all')
     img_buf = io.BytesIO()
     if len(args) == 5:
         i, j = args[-3], args[-1]
-        p1 = plotting.plot(func, show=False, xlim=(i, j), ylim=(minimum(func, x, domain=Interval(float(i),float(j))),
-                                                   maximum(func, x, domain=Interval(float(i), float(j)))))
+        p1 = plotting.plot(func, show=False, xlim=(i, j), ylim=(minimum(func, x, domain=Interval(float(i), float(j))),
+                                                                maximum(func, x, domain=Interval(float(i), float(j)))))
         p1.save(img_buf)
         im = Image.open(img_buf)
     else:
@@ -153,7 +152,6 @@ def echo_message(message):
     bot.reply_to(message, answer)
 
 
-
 # Handle '/minimum'
 @bot.message_handler(commands=["minimum"])
 def echo_message(message):
@@ -173,6 +171,7 @@ def echo_message(message):
         answer = getAnswerXY(term, my)
     bot.reply_to(message, answer)
 
+
 @bot.message_handler(commands=["evaluate"])
 def evaluate(message):
     '''
@@ -185,6 +184,7 @@ def evaluate(message):
     func = parse_expr(term, local_dict={'x': x}, transformations='all')
     m = func.evalf()
     bot.reply_to(message, m)
+
 
 # Handle all other messages
 @bot.message_handler(func=lambda message: True)

@@ -11,7 +11,8 @@ real-valued functions like:
 
 # Installation
 
-This Project uses the Telegram-Bot-API and SymPy.
+This Project uses the [Telegram-Bot-API](https://github.com/eternnoir/pyTelegramBotAPI) and
+[SymPy](https://docs.sympy.org/dev/index.html).
 
 Install all requirements with:
 ```bash
@@ -23,7 +24,7 @@ $ pip install -r requierements.txt
 ````bash
 python PyBot.py
 ````
-2. Open Telegram and start a conversation with the Bot (https://t.me/MathCalcultorBot) using the command '/start'. 
+2. Open Telegram and start a conversation with the [Bot](https://t.me/MathCalcultorBot) named _MathCalcultorBot_ using the command '/start'. 
 
 3. The Bot can answer via textmessage to following commands:
 > - /simplify \<expression> 
