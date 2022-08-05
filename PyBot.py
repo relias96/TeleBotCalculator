@@ -118,7 +118,13 @@ def echo_message(message):
         m = minimum(func, x)
     bot.reply_to(message, m)
 
-
+@bot.message_handler(commands=["evaluate"])
+def evaluate(message):
+    args = extract_arg(message.text)[:]
+    term = args[0]
+    func = parse_expr(term, local_dict={'x': x}, transformations='all')
+    m = func.evalf()
+    bot.reply_to(message, m)
 # Handle all other messages
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):

@@ -56,7 +56,7 @@ Respect  the formatting of \<expression>:
 
 > /simplify (x\*\*3+x\*\*2-x-1)/(x\*\*2+2\*x+1)
 
-> \plot x\*\*3-3*x\*\*2+2\*x 
+> \plot x\*\*3-3*x\*\*2+2\*x
 ## Instructions for Usage
 When you fulfil the requirements then you are ready to use the Telebot. You should make sure that the PyBot.py is 
 running before you send a message to the TeleBot. You can send "/start" to the Telebot (https://t.me/MathCalcultorBot) 
