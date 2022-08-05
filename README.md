@@ -53,14 +53,17 @@ Respect  the formatting of \<expression>:
 ### Examples
 
 > /simplify sin(x)\*\*2+cos(x)\*\*2
-        -> ff
+
 > /simplify (x\*\*3+x\*\*2-x-1)/(x\*\*2+2\*x+1)
 
 > /derivate cos(x)
 
 > /integrate log(x)**2
 
-> /plot x\*\*3-3*x\*\*2+2\*x
+> /plot sin(x**2)
+
+..* ![telegram-cloud-photo-size-2-5435895757724040965-x](https://user-images.githubusercontent.com/102993230/183138840-6a5e484e-484a-4898-ab25-1d1e5031340e.jpg)
+
 
 > /maximum sin(x) from 1.44 to 1.99
 
