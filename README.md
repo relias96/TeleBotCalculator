@@ -53,6 +53,7 @@ Respect  the formatting of \<expression>:
 ### Examples
 
 > /simplify sin(x)\*\*2+cos(x)\*\*2
+        -> ff
 > /simplify (x\*\*3+x\*\*2-x-1)/(x\*\*2+2\*x+1)
 
 > /derivate cos(x)
