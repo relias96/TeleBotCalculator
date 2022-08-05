@@ -16,6 +16,14 @@ bot = telebot.TeleBot(API_TOKEN)
 def extract_arg(arg):
     return arg.split()[1:]
 
+def getAnswerXY(term, my):
+    if my < 0:
+        toSolve = "%s+%s" % (term, my)
+    else:
+        toSolve = "%s-%s" % (term, my)
+    mx = solve(parse_expr(toSolve, local_dict={'x': x}, transformations='all'))[0]
+    return "x = %s \ny = %s " % (mx, my)
+
 # Handle '/start'
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -36,6 +44,8 @@ Write the command "/help" to get more information about the functions
 @bot.message_handler(commands=['help'])
 def send_help(message):
     bot.reply_to(message, """\
+    
+    Start every command with a Slash ('/')
     
     Rule I: Don't use whitespaces in the expression. \n
     Rule II: Only use 'x' as variable. \n
@@ -99,10 +109,13 @@ def echo_message(message):
     func = parse_expr(term, local_dict={'x': x}, transformations='all')
     if len(args) == 5:
         i, j = args[-3], args[-1]
-        m = maximum(func, x, Interval(float(i), float(j)))
+        my = maximum(func, x, Interval(float(i), float(j)))
+        answer = getAnswerXY(term, my)
     else:
-        m = maximum(func, x)
-    bot.reply_to(message, m)
+        my = maximum(func, x)
+        answer = getAnswerXY(term, my)
+    bot.reply_to(message, answer)
+
 
 
 # Handle '/minimum'
@@ -113,10 +126,12 @@ def echo_message(message):
     func = parse_expr(term, local_dict={'x': x}, transformations='all')
     if len(args) == 5:
         i, j = args[-3], args[-1]
-        m = minimum(func, x, Interval(float(i), float(j)))
+        my = minimum(func, x, Interval(float(i), float(j)))
+        answer = getAnswerXY(term, my)
     else:
-        m = minimum(func, x)
-    bot.reply_to(message, m)
+        my = minimum(func, x)
+        answer = getAnswerXY(term, my)
+    bot.reply_to(message, answer)
 
 @bot.message_handler(commands=["evaluate"])
 def evaluate(message):
